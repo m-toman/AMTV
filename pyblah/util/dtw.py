@@ -11,7 +11,6 @@ http://en.wikipedia.org/wiki/Dynamic_time_warping
 import sys
  
 class Dtw(object):
-    
     def __init__(self, seq1, seq2, distance_func=None):
         '''
         seq1, seq2 are two lists,
@@ -55,7 +54,6 @@ class Dtw(object):
         #        DTW[i, j] := cost + minimum(DTW[i-1, j  ],    // insertion
         #                                    DTW[i  , j-1],    // deletion
         #                                    DTW[i-1, j-1])    // match        
-
         for i in range( 0, len(self._seq1) ):
             for j in range( 0, len(self._seq2) ):
                 cost = self.get_distance(i, j)
@@ -66,9 +64,26 @@ class Dtw(object):
                                             )
         return self._map
                                         
-
+#    def calculate_backward(self, i1, i2):
+#        '''
+#        Calculate the dtw distance between
+#        seq1[:i1 + 1] and seq2[:i2 + 1]
+#        '''
+#        if self._map.get((i1, i2)) is not None:
+#            return self._map[(i1, i2)]
+#         
+#        if i1 == -1 or i2 == -1:
+#            self._map[(i1, i2)] = float('inf')
+#            return float('inf')
+#         
+#        min_i1, min_i2 = min((i1 - 1, i2), (i1, i2 - 1), (i1 - 1, i2 - 1),
+#                                key=lambda x: self.calculate_backward(*x) )
+#         
+#        self._map[(i1, i2)] = self.get_distance(i1, i2) + self.calculate_backward(min_i1, min_i2)
+#         
+#        return self._map[(i1, i2)]
+     
     def calculate_constrained(self, r):
-
         for i in range(-1, len(self._seq1)):
             for j in range(-1, len(self._seq2)):
 
@@ -91,26 +106,7 @@ class Dtw(object):
                                               self._map[ i-1 ,  j-1 ]       # match
                                              )
         return self._map
-
-#    def calculate_backward(self, i1, i2):
-#        '''
-#        Calculate the dtw distance between
-#        seq1[:i1 + 1] and seq2[:i2 + 1]
-#        '''
-#        if self._map.get((i1, i2)) is not None:
-#            return self._map[(i1, i2)]
-#         
-#        if i1 == -1 or i2 == -1:
-#            self._map[(i1, i2)] = float('inf')
-#            return float('inf')
-#         
-#        min_i1, min_i2 = min((i1 - 1, i2), (i1, i2 - 1), (i1 - 1, i2 - 1),
-#                                key=lambda x: self.calculate_backward(*x) )
-#         
-#        self._map[(i1, i2)] = self.get_distance(i1, i2) + self.calculate_backward(min_i1, min_i2)
-#         
-#        return self._map[(i1, i2)]
-     
+ 
     def get_path(self):
         '''
         Calculate the path mapping.
@@ -123,4 +119,3 @@ class Dtw(object):
                                     key=lambda x: self._map[x[0], x[1]])
             i1, i2 = min_i1, min_i2
         return self._path
-     
