@@ -35,14 +35,12 @@ logger = logging.getLogger("interpolate")
 # InterpolationPoint
 #==============================================================================
 class InterpolationPoint(object):
-
     """Between these points, interpolation will occur.
 
     A single interpolation point is a complete utterance.
     """
 
     def __init__(self, modelfolder, labelfile, expand=False):
-
         """Loads models, labels and sets up necessary data structures."""
 
         self.expanded = expand
@@ -88,7 +86,6 @@ class InterpolationPoint(object):
                                                  , self.bndap_macros)
 
     def _expand_states(self):
-
         ''' Expands all states with duration > 1 to duration states with duration 1 '''
 
         new_mcep = []
@@ -187,7 +184,6 @@ class InterpolationPoint(object):
 # Interpolator
 #=======================================================================
 class Interpolator(object):
-
     """ Interpolations between two utterances stored in two interpolation points. """
 
     def __init__(self):
